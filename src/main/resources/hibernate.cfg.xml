@@ -1,0 +1,16 @@
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection settings -->
+        <property name="connection.driver_class">org.h2.Driver</property>
+        <property name="connection.url">jdbc:h2:./data/contactmgr</property>
+
+        <!-- SQL Dialect -->
+        <property name="dialect">org.hibernate.dialect.H2Dialect</property>
+
+        <!-- Create Database schema on ap start up -->
+        <property name="hbm2ddl.auto">create</property>
+
+        <!-- Names the annotated entity classes -->
+        <mapping class="com.hibernate.contactmgr.model.Contact" />
+    </session-factory>
+</hibernate-configuration>
