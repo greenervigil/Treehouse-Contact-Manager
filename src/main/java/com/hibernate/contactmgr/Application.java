@@ -27,7 +27,7 @@ public class Application {
                 .withPhone(5555558898L)
                 .build();
 
-        save(contact);
+        int id = save(contact);
 
         //Display list of contacts
         //for(Contact c : fetchAllContacts()) {
@@ -35,7 +35,50 @@ public class Application {
         //}
 
         //java 8 solution
+        System.out.printf("%n%nBefore update%n%n");
         fetchAllContacts().stream().forEach(System.out::println);
+
+        //Get persistent contact
+        Contact c = findContactByID(id);
+        //Update contact
+        c.setFirstName("Oliver");
+
+        //Persist the change
+        System.out.printf("%n%nUpdating%n%n");
+        update(c);
+        System.out.printf("%n%nUpdate complete%n%n");
+        //Display list of contacts
+
+        System.out.printf("%n%nAfter update%n%n");
+        fetchAllContacts().stream().forEach(System.out::println);
+
+
+
+    }
+
+
+    private static Contact findContactByID(int id) {
+        //Open session
+        Session session = sessionFactory.openSession();
+        //Retrieve persistent object
+        Contact contact = session.get(Contact.class,id);
+
+
+        //Close session and return contact
+        session.close();
+        return contact;
+    }
+
+    private static void update(Contact contact){
+        //open session
+        Session session = sessionFactory.openSession();
+        //begin transaction
+        session.beginTransaction();
+        //commit the transaction
+        session.update(contact);
+        //Close session
+        session.getTransaction().commit();
+        session.close();
     }
 
     @SuppressWarnings("unchecked")
@@ -54,12 +97,13 @@ public class Application {
         return contacts;
     }
 
-    private static void save(Contact contact) {
+    private static int save(Contact contact) {
         //open session
         Session session = sessionFactory.openSession();
         //begin transaction
         session.beginTransaction();
 
+        int id = (int)session.save(contact);
 
         //save contact with session
         session.save(contact);
@@ -68,6 +112,7 @@ public class Application {
         session.getTransaction().commit();
         //close session
         session.close();
+        return id;
     }
 }
 
