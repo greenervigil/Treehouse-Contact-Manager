@@ -30,14 +30,15 @@ public class Application {
         save(contact);
 
         //Display list of contacts
-        for(Contact c : fetchAllContacts()) {
-            System.out.println(c);
-        }
+        //for(Contact c : fetchAllContacts()) {
+          //  System.out.println(c);
+        //}
+
         //java 8 solution
-        //fetchAllContacts().stream().forEach(System.out::println);
+        fetchAllContacts().stream().forEach(System.out::println);
     }
 
-
+    @SuppressWarnings("unchecked")
     private static List<Contact> fetchAllContacts() {
         //Open session
         Session session = sessionFactory.openSession();
