@@ -10,6 +10,9 @@
         <!-- Create Database schema on ap start up -->
         <property name="hbm2ddl.auto">create</property>
 
+        <!-- Show the queries prepared by hibernate -->
+        <property name="show_sql">true</property>
+
         <!-- Names the annotated entity classes -->
         <mapping class="com.hibernate.contactmgr.model.Contact" />
     </session-factory>

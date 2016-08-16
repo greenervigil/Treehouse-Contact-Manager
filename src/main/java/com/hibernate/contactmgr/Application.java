@@ -1,6 +1,7 @@
 package com.hibernate.contactmgr;
 
 import com.hibernate.contactmgr.model.Contact;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -8,7 +9,7 @@ import org.hibernate.service.ServiceRegistry;
 
 
 public class Application {
-    //private static final SessionFactory sessionFactory = buildSessionFactory();
+    private static final SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {
         //Create std serivce reg obj
@@ -22,6 +23,20 @@ public class Application {
                 .withEmail("DJGV@Mail.com")
                 .withPhone(5555558898L)
                 .build();
+
+        //open session
+        Session session = sessionFactory.openSession();
+        //begin transaction
+        session.beginTransaction();
+
+
+        //save contact with session
+        session.save(contact);
+
+        //commit transaction
+        session.getTransaction().commit();
+        //close session
+        session.close();
     }
 }
 
